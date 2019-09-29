@@ -2,9 +2,9 @@
 
 class Student_model extends CI_Model
 {
-  public function getAllStudent()
+  public function getStudents($limit, $start)
   {
-    return $this->db->get('tbl_students')->result_array();
+    return $this->db->get('tbl_students', $limit, $start)->result_array();
   }
 
   public function getStudentById($id)

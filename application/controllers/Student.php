@@ -11,7 +11,36 @@ class Student extends CI_Controller
   public function index()
   {
     $data['judul'] = 'Students Page';
-    $data['students'] = $this->Student_model->getAllStudent();
+    // LOAD PEGINATION
+    $this->load->library('pagination');
+    // CONFIG PEGINATION
+    $config = [
+      'base_url' => 'http://localhost/Ci-Project/Ci-latihan/student/index',
+      'total_rows' => $this->db->get('tbl_students')->num_rows(),
+      'per_page' => 5,
+      'full_tag_open' => '<nav><ul class="pagination justify-content-center pagination-sm">',
+      'full_tag_close' => '</ul></nav>',
+      'cur_tag_open' => '<li class="page-item active"><a class="page-link" href="#">',
+      'cur_tag_close' => '</a></li>',
+      'num_tag_open' => '<li class="page-item">',
+      'num_tag_close' => '</li>',
+      'next_link' => '->',
+      'next_tag_open' => '<li class="page-item">',
+      'next_tag_close' => '</li>',
+      'prev_link' => '<-',
+      'prev_tag_open' => '<li class="page-item">',
+      'prev_tag_close' => '</li>',
+      'first_tag_open' => '<li class="page-item">',
+      'first_tag_close' => '</li>',
+      'last_tag_open' => '<li class="page-item">',
+      'last_tag_close' => '</li>'
+    ];
+    $config['attributes'] = array('class' => 'page-link');
+    // INISIALIZE PEGINATION
+    $this->pagination->initialize($config);
+    $data['start'] = $this->uri->segment(3);
+
+    $data['students'] = $this->Student_model->getStudents($config['per_page'], $data['start']);
     $data['user'] = $this->db->get_where(
       'tbl_user',
       ['nama_user' => $this->session->userdata('nama_user')]

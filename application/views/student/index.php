@@ -17,7 +17,7 @@
           </div>
 
           <?= $this->session->flashdata('flash'); ?>
-          <ul class="list-group">
+          <ul class="list-group mb-2">
             <?php foreach ($students as $student) : ?>
               <li class="list-group-item">
                 <?= $student['nama']; ?>
@@ -27,6 +27,7 @@
               </li>
             <?php endforeach; ?>
           </ul>
+          <?= $this->pagination->create_links(); ?>
         </div>
       </div>
     </div>
