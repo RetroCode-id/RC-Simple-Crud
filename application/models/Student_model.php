@@ -2,8 +2,11 @@
 
 class Student_model extends CI_Model
 {
-  public function getStudents($limit, $start)
+  public function getStudents($limit, $start, $keyword = null)
   {
+    if ($keyword) {
+      $this->db->like('nama', $keyword);
+    }
     return $this->db->get('tbl_students', $limit, $start)->result_array();
   }
 
